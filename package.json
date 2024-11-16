@@ -1,6 +1,14 @@
 {
+  "type": "module",
   "dependencies": {
     "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "mysql": "^2.18.1"
+  },
+  "scripts": {
+    "dev": "npx nodemon backend/server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
