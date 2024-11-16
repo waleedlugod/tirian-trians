@@ -1,6 +1,6 @@
 Before running anything, install the packages with `npm i`.
 
-To create and run a local server, type `npm run dev`, and open (localhost:8080)[localhost:8080] in your browser.
+To create and run a local server, type `npm run dev`, and open [localhost:8080](http://localhost:8080) in your browser.
 
 # Database setup
 1. Create a `.env` file and copy the contents of `.env.example`. Edit the file if necessary but defaults should be fine.
