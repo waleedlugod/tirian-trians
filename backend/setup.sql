@@ -29,7 +29,7 @@ CREATE TABLE CREW(
 CREATE TABLE WORKER(
     worker_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
     given_name VARCHAR(255) NOT NULL,
-    middle_initial VARCHAR(255) NOT NULL,
+    middle_initial CHAR(1),
     last_name VARCHAR(255) NOT NULL,
     crew_id INT NOT NULL,
     FOREIGN KEY (crew_id) REFERENCES CREW(crew_id)
@@ -50,7 +50,7 @@ CREATE TABLE MAINTENANCE_LOG(
 CREATE TABLE PASSENGER(
     passenger_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
     given_name VARCHAR(255) NOT NULL,
-    middle_initial VARCHAR(255) NOT NULL,
+    middle_initial CHAR(1),
     last_name VARCHAR(255) NOT NULL,
 	birth_date DATE NOT NULL,
 	gender VARCHAR(6) NOT NULL, -- male, female
@@ -125,10 +125,10 @@ VALUES
 INSERT INTO WORKER (given_name,middle_initial,last_name,crew_id) 
 VALUES 
 ("Roger", "M", "Candari", 1),
-("Zoe", "IDK", "Ongkiko", 1),
-("Albert", "IDK", "Abdon", 1),
-("James", "IDK", "Mostajo", 1),
-("Waleed", "IDK", "Lugod", 1), -- 5
+("Zoe", "", "Ongkiko", 1),
+("Albert", "", "Abdon", 1),
+("James", "", "Mostajo", 1),
+("Waleed", "", "Lugod", 1), -- 5
 ("Altay", "A", "Bayindir", 2),
 ("Tom", "B", "Heaton", 2),
 ("Andre", "C", "Onana", 2), -- 8
