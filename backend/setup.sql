@@ -30,6 +30,7 @@ CREATE TABLE WORKER(
     given_name VARCHAR(255) NOT NULL,
     middle_initial CHAR(1),
     last_name VARCHAR(255) NOT NULL,
+	is_manager BOOL NOT NULL,
     crew_id INT NOT NULL,
     FOREIGN KEY (crew_id) REFERENCES CREW(crew_id)
 );
@@ -128,34 +129,27 @@ INSERT INTO CREW (crew_id) VALUES
 (NULL),
 (NULL);
 
-INSERT INTO WORKER (given_name,middle_initial,last_name,crew_id) 
+INSERT INTO WORKER (given_name,middle_initial,last_name, is_manager, crew_id) 
 VALUES 
-("Roger", "M", "Candari", 1),
-("Zoe", "", "Ongkiko", 1),
-("Albert", "", "Abdon", 1),
-("James", "", "Mostajo", 1),
-("Waleed", "", "Lugod", 1), -- 5
-("Altay", "A", "Bayindir", 2),
-("Tom", "B", "Heaton", 2),
-("Andre", "C", "Onana", 2), -- 8
-("Victor", "D", "Lindelof", 3),
-("Matthijs", "E", "De Ligt", 3),
-("Lisandro", "F", "Martinez", 3),
-("Noussair", "G", "Mazraoui", 3), -- 12
-("Bruno", "H", "Fernandes", 4),
-("Manuel", "I", "Ugarte", 4),
-("Mason", "J", "Mount", 4), -- 15
-("Marcus", "K", "Rashford", 5),
-("Joshua", "L", "Zirkzee", 5),
-("Alejandro", "M", "Garnacho", 5),
-("Rasmus", "N", "Hojlund", 5); -- 20
-
-INSERT INTO MANAGER_ASSIGNMENT (crew_id, worker_id) VALUES
-(1, 5),
-(2, 8),
-(3, 11),
-(4, 13),
-(5, 16);
+("Roger", "M", "Candari", FALSE, 1),
+("Zoe", "", "Ongkiko", FALSE, 1),
+("Albert", "", "Abdon", FALSE, 1),
+("James", "", "Mostajo", FALSE, 1),
+("Waleed", "", "Lugod", TRUE, 1), -- 5
+("Altay", "A", "Bayindir", FALSE, 2),
+("Tom", "B", "Heaton", FALSE, 2),
+("Andre", "C", "Onana", TRUE, 2), -- 8
+("Victor", "D", "Lindelof", FALSE, 3),
+("Matthijs", "E", "De Ligt", FALSE, 3),
+("Lisandro", "F", "Martinez", TRUE, 3),
+("Noussair", "G", "Mazraoui", FALSE, 3), -- 12
+("Bruno", "H", "Fernandes", TRUE, 4),
+("Manuel", "I", "Ugarte", FALSE, 4),
+("Mason", "J", "Mount", FALSE, 4), -- 15
+("Marcus", "K", "Rashford", TRUE, 5),
+("Joshua", "L", "Zirkzee", FALSE, 5),
+("Alejandro", "M", "Garnacho", FALSE, 5),
+("Rasmus", "N", "Hojlund", FALSE, 5); -- 20
 
 INSERT INTO MAINTENANCE_LOG (log_date,task,cond,train_id,crew_id)
 VALUES
