@@ -22,25 +22,9 @@ CREATE TABLE TRAIN(
 );
 
 CREATE TABLE CREW(
-    crew_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY
-);
-
-CREATE TABLE WORKER(
-    worker_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    given_name VARCHAR(255) NOT NULL,
-    middle_initial CHAR(1),
-    last_name VARCHAR(255) NOT NULL,
-	is_manager BOOL NOT NULL,
-    crew_id INT NOT NULL,
-    FOREIGN KEY (crew_id) REFERENCES CREW(crew_id)
-);
-
-CREATE TABLE MANAGER_ASSIGNMENT(
-    assignment_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    crew_id INT NOT NULL,
-    worker_id INT NOT NULL,
-	FOREIGN KEY (crew_id) REFERENCES CREW(crew_id),
-	FOREIGN KEY (worker_id) REFERENCES WORKER(worker_id)
+    crew_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
+    initial CHAR(1) NOT NULL,
+    last_name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE MAINTENANCE_LOG(
@@ -122,34 +106,12 @@ VALUES
 ("A-001",180,800,10,false,false,true,true,false,true),
 ("A-002",150,700,8,true,true,false,true,false,true);
 
-INSERT INTO CREW (crew_id) VALUES
-(NULL),
-(NULL),
-(NULL),
-(NULL),
-(NULL);
-
-INSERT INTO WORKER (given_name,middle_initial,last_name, is_manager, crew_id) 
-VALUES 
-("Roger", "M", "Candari", FALSE, 1),
-("Zoe", "", "Ongkiko", FALSE, 1),
-("Albert", "", "Abdon", FALSE, 1),
-("James", "", "Mostajo", FALSE, 1),
-("Waleed", "", "Lugod", TRUE, 1), -- 5
-("Altay", "A", "Bayindir", FALSE, 2),
-("Tom", "B", "Heaton", FALSE, 2),
-("Andre", "C", "Onana", TRUE, 2), -- 8
-("Victor", "D", "Lindelof", FALSE, 3),
-("Matthijs", "E", "De Ligt", FALSE, 3),
-("Lisandro", "F", "Martinez", TRUE, 3),
-("Noussair", "G", "Mazraoui", FALSE, 3), -- 12
-("Bruno", "H", "Fernandes", TRUE, 4),
-("Manuel", "I", "Ugarte", FALSE, 4),
-("Mason", "J", "Mount", FALSE, 4), -- 15
-("Marcus", "K", "Rashford", TRUE, 5),
-("Joshua", "L", "Zirkzee", FALSE, 5),
-("Alejandro", "M", "Garnacho", FALSE, 5),
-("Rasmus", "N", "Hojlund", FALSE, 5); -- 20
+INSERT INTO CREW (initial, last_name) VALUES
+("D", "Lugod"),
+("C", "Onana"),
+("F", "Martinez"),
+("H", "Fernandes"),
+("K", "Rashford");
 
 INSERT INTO MAINTENANCE_LOG (log_date,task,cond,train_id,crew_id)
 VALUES
