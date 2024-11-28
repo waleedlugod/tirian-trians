@@ -22,8 +22,7 @@ CREATE TABLE TRAIN(
 );
 
 CREATE TABLE CREW(
-    crew_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    manager_id INT NOT NULL
+    crew_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY
 );
 
 CREATE TABLE WORKER(
@@ -33,6 +32,14 @@ CREATE TABLE WORKER(
     last_name VARCHAR(255) NOT NULL,
     crew_id INT NOT NULL,
     FOREIGN KEY (crew_id) REFERENCES CREW(crew_id)
+);
+
+CREATE TABLE MANAGER_ASSIGNMENT(
+    assignment_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
+    crew_id INT NOT NULL,
+    worker_id INT NOT NULL,
+	FOREIGN KEY (crew_id) REFERENCES CREW(crew_id),
+	FOREIGN KEY (worker_id) REFERENCES WORKER(worker_id)
 );
 
 CREATE TABLE MAINTENANCE_LOG(
@@ -114,13 +121,12 @@ VALUES
 ("A-001",180,800,10,false,false,true,true,false,true),
 ("A-002",150,700,8,true,true,false,true,false,true);
 
-INSERT INTO CREW (manager_id) 
-VALUES 
-(5),
-(8),
-(11),
-(13),
-(16);
+INSERT INTO CREW (crew_id) VALUES
+(NULL),
+(NULL),
+(NULL),
+(NULL),
+(NULL);
 
 INSERT INTO WORKER (given_name,middle_initial,last_name,crew_id) 
 VALUES 
@@ -143,6 +149,13 @@ VALUES
 ("Joshua", "L", "Zirkzee", 5),
 ("Alejandro", "M", "Garnacho", 5),
 ("Rasmus", "N", "Hojlund", 5); -- 20
+
+INSERT INTO MANAGER_ASSIGNMENT (crew_id, worker_id) VALUES
+(1, 5),
+(2, 8),
+(3, 11),
+(4, 13),
+(5, 16);
 
 INSERT INTO MAINTENANCE_LOG (log_date,task,cond,train_id,crew_id)
 VALUES
@@ -328,9 +341,6 @@ VALUES
 (17,10),
 (18,11),
 (19,11);
-
-ALTER TABLE CREW ADD CONSTRAINT FK_CREW_WORKER
-    FOREIGN KEY (manager_id) REFERENCES WORKER(worker_id);
 
 -- SELECT * FROM TRAIN;
 -- SELECT * FROM CREW;
