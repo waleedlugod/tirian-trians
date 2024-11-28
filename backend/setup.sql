@@ -108,11 +108,11 @@ CREATE TABLE TICKET_TRIP(
 
 INSERT INTO TRAIN (model,max_speed,seat_count,toilet_count,has_reclining_seats,has_folding_tables,has_disability_access,has_luggage_storage,has_vending_machines,has_food_service)
 VALUES 
-("TRN1",200,500,10,true,false,true,true,false,true),
-("TRN2",150,800,7,true,true,false,true,false,true),
-("TRN3",300,300,6,true,true,true,true,true,true),
-("TRN4",180,800,10,false,false,true,true,false,true),
-("TRN5",150,700,8,true,true,false,true,false,true);
+("S-000",200,500,10,true,false,true,true,false,true),
+("S-001",150,800,7,true,true,false,true,false,true),
+("A-000",300,300,6,true,true,true,true,true,true),
+("A-001",180,800,10,false,false,true,true,false,true),
+("A-002",150,700,8,true,true,false,true,false,true);
 
 INSERT INTO CREW (manager_id) 
 VALUES 
