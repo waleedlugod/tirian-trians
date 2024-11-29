@@ -20,12 +20,19 @@ app.get('/api/test', (req, res) => {
 })
 
 app.get('/api/db_test', (req, res) => {
-  db.connect()
   db.query('SELECT * FROM test', (error, results, fields) => {
     res.send(results)
     console.log(error)
     console.log(results)
     console.log(fields)
   })
-  db.end()
+})
+
+app.get('/api/logs', (req, res) => {
+  db.query('SELECT * FROM MAINTENANCE_LOG', (error, results, fields) => {
+    res.send(results)
+    console.log(error)
+    console.log(results)
+    console.log(fields)
+  })
 })

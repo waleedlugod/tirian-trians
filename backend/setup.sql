@@ -36,7 +36,7 @@ CREATE TABLE MAINTENANCE_LOG(
     crew_id INT NOT NULL,
     FOREIGN KEY (train_id) REFERENCES TRAIN(train_id),
     FOREIGN KEY (crew_id) REFERENCES CREW(crew_id),
-	CONSTRAINT CK_cond CHECK (cond IN ('bad', 'ok', 'very good', 'excellent'))
+    CONSTRAINT CK_cond CHECK (cond IN ('bad', 'ok', 'very good', 'excellent'))
 );
 
 CREATE TABLE PASSENGER(
@@ -44,67 +44,67 @@ CREATE TABLE PASSENGER(
     given_name VARCHAR(255) NOT NULL,
     middle_initial CHAR(1),
     last_name VARCHAR(255) NOT NULL,
-	birth_date DATE NOT NULL,
-	gender VARCHAR(6) NOT NULL, -- male, female
-	CONSTRAINT CK_gender CHECK (gender IN ('male', 'female'))
+    birth_date DATE NOT NULL,
+    gender VARCHAR(6) NOT NULL, -- male, female
+    CONSTRAINT CK_gender CHECK (gender IN ('male', 'female'))
 );
 
 CREATE TABLE TICKET(
     ticket_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-	total_cost INT NOT NULL,
-	date_purchased DATETIME NOT NULL,
-	passenger_id INT NOT NULL,
-	FOREIGN KEY (passenger_id) REFERENCES PASSENGER(passenger_id)
+    total_cost INT NOT NULL,
+    date_purchased DATETIME NOT NULL,
+    passenger_id INT NOT NULL,
+    FOREIGN KEY (passenger_id) REFERENCES PASSENGER(passenger_id)
 );
 
 CREATE TABLE TRIP_SCHEDULE(
     schedule_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-	schedule_date DATE NOT NULL
+    schedule_date DATE NOT NULL
 );
 
 CREATE TABLE STATION(
     station_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-	station_name VARCHAR(255) NOT NULL
+    station_name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE ROUTE(
     route_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-	system_type VARCHAR(9), -- local, intertown
-	origin_station_id INT NOT NULL,
-	destination_station_id INT NOT NULL,
-	FOREIGN KEY (origin_station_id) REFERENCES STATION(station_id),
-	FOREIGN KEY (destination_station_id) REFERENCES STATION(station_id),
-	CONSTRAINT CK_system_type CHECK (system_type IN ('local', 'intertown'))
+    system_type VARCHAR(9), -- local, intertown
+    origin_station_id INT NOT NULL,
+    destination_station_id INT NOT NULL,
+    FOREIGN KEY (origin_station_id) REFERENCES STATION(station_id),
+    FOREIGN KEY (destination_station_id) REFERENCES STATION(station_id),
+    CONSTRAINT CK_system_type CHECK (system_type IN ('local', 'intertown'))
 );
 
 CREATE TABLE TRIP(
     trip_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-	departure TIME NOT NULL,
-	arrival TIME NOT NULL,
-	cost INT NOT NULL,
-	train_id INT NOT NULL,
-	route_id INT NOT NULL,
-	schedule_id INT NOT NULL,
-	FOREIGN KEY (train_id) REFERENCES TRAIN(train_id),
-	FOREIGN KEY (route_id) REFERENCES ROUTE(route_id),
-	FOREIGN KEY (schedule_id) REFERENCES TRIP_SCHEDULE(schedule_id)
+    departure TIME NOT NULL,
+    arrival TIME NOT NULL,
+    cost INT NOT NULL,
+    train_id INT NOT NULL,
+    route_id INT NOT NULL,
+    schedule_id INT NOT NULL,
+    FOREIGN KEY (train_id) REFERENCES TRAIN(train_id),
+    FOREIGN KEY (route_id) REFERENCES ROUTE(route_id),
+    FOREIGN KEY (schedule_id) REFERENCES TRIP_SCHEDULE(schedule_id)
 );
 
 CREATE TABLE TICKET_TRIP(
     ticket_trip_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-	ticket_id INT NOT NULL,
-	trip_id INT NOT NULL,
-	FOREIGN KEY (ticket_id) REFERENCES TICKET(ticket_id),
-	FOREIGN KEY (trip_id) REFERENCES TRIP(trip_id)
+    ticket_id INT NOT NULL,
+    trip_id INT NOT NULL,
+    FOREIGN KEY (ticket_id) REFERENCES TICKET(ticket_id),
+    FOREIGN KEY (trip_id) REFERENCES TRIP(trip_id)
 );
 
 DELIMITER //
 CREATE TRIGGER LOCAL_TRIP_RULES BEFORE INSERT ON TRIP
 FOR EACH ROW BEGIN
-	IF((SELECT system_type FROM ROUTE r WHERE r.route_id = new.route_id) = 'local'
-		AND (new.cost <> 2 OR TIMEDIFF(new.arrival, new.departure) <> '00:05:00')) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "incorrect values for local route";
-	END IF;
+    IF((SELECT system_type FROM ROUTE r WHERE r.route_id = new.route_id) = 'local'
+        AND (new.cost <> 2 OR TIMEDIFF(new.arrival, new.departure) <> '00:05:00')) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "incorrect values for local route";
+    END IF;
 END //
 DELIMITER ;
 
