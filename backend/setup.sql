@@ -98,6 +98,16 @@ CREATE TABLE TICKET_TRIP(
 	FOREIGN KEY (trip_id) REFERENCES TRIP(trip_id)
 );
 
+DELIMITER //
+CREATE TRIGGER LOCAL_TRIP_RULES BEFORE INSERT ON TRIP
+FOR EACH ROW BEGIN
+	IF((SELECT system_type FROM ROUTE r WHERE r.route_id = new.route_id) = 'local'
+		AND (new.cost <> 2 OR TIMEDIFF(new.arrival, new.departure) <> '00:05:00')) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "incorrect values for local route";
+	END IF;
+END //
+DELIMITER ;
+
 INSERT INTO TRAIN (model,max_speed,seat_count,toilet_count,has_reclining_seats,has_folding_tables,has_disability_access,has_luggage_storage,has_vending_machines,has_food_service)
 VALUES 
 ("S-000",200,500,10,true,false,true,true,false,true),
