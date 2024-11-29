@@ -67,9 +67,8 @@ CREATE TABLE STATION(
 	station_name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE ROUTES(
+CREATE TABLE ROUTE(
     route_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-	travel_time TIME NOT NULL,
 	system_type VARCHAR(9), -- local, intertown
 	origin_station_id INT NOT NULL,
 	destination_station_id INT NOT NULL,
@@ -80,13 +79,14 @@ CREATE TABLE ROUTES(
 
 CREATE TABLE TRIP(
     trip_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-	departure DATETIME NOT NULL,
-	arrival DATETIME NOT NULL,
+	departure TIME NOT NULL,
+	arrival TIME NOT NULL,
+	cost INT NOT NULL,
 	train_id INT NOT NULL,
 	route_id INT NOT NULL,
 	schedule_id INT NOT NULL,
 	FOREIGN KEY (train_id) REFERENCES TRAIN(train_id),
-	FOREIGN KEY (route_id) REFERENCES ROUTES(route_id),
+	FOREIGN KEY (route_id) REFERENCES ROUTE(route_id),
 	FOREIGN KEY (schedule_id) REFERENCES TRIP_SCHEDULE(schedule_id)
 );
 
@@ -150,153 +150,90 @@ VALUES
 
 INSERT INTO TICKET (total_cost,date_purchased,passenger_id)
 VALUES
-(15,'2024-07-22',1),
-(15,'2024-07-22',2),
-(15,'2024-07-22',3),
-(15,'2024-07-22',4),
-(10,'2024-07-24',5),
-(10,'2024-07-25',6),
-(10,'2024-07-26',7),
-(20,'2024-07-26',8),
-(25,'2024-07-30',9),
-(20,'2024-08-02',10),
-(15,'2024-08-02',11),
-(10,'2024-08-03',12),
-(10,'2024-08-06',13),
-(5,'2024-08-06',14),
-(10,'2024-08-07',15),
-(15,'2024-08-10',16),
-(15,'2024-08-10',17),
-(10,'2024-08-10',18),
-(30,'2024-08-11',19);
+(6,'2024-11-24',1),
+(30,'2024-11-25',2);
 
 INSERT INTO TRIP_SCHEDULE (schedule_date)
 VALUES
-('2024-07-25'),
-('2024-07-30'),
-('2024-08-04'),
-('2024-08-09'),
-('2024-08-14');
+('2024-11-24'),
+('2024-11-25');
 
 INSERT INTO STATION (station_name)
 VALUES
+('Beaver''s Dam'),
 ('Allies'' Enclave'),
-('Beaver Dam''s'),
-('The Lamp Post'),
 ('The Wardrobe'),
-('Asian''s Camp'), -- 5
-('The Stone Table'),
-('Dancing Lawn'),
-('Anvard'),
+('The Lamp Post'),
+('Mr. Tumms'), -- 5
+('Aslan''s Camp'),
 ('Cauldron Pool'),
-('R. Tumms'),
-('Cherry Pool'),
 ('Witch''s Camp'),
+('The Stone Table'),
+('Dancing Lawn'), -- 10
+('Anvard'),
+('Cherry Tree'),
 ('Father Christmas');
 
-INSERT INTO ROUTES (travel_time, system_type, origin_station_id, destination_station_id) 
+INSERT INTO ROUTE (system_type, origin_station_id, destination_station_id) 
 VALUES
 -- Local System Routes (Circular)
-('00:05:00', 'local', 2, 1),
-('00:05:00', 'local', 1, 4),
-('00:05:00', 'local', 4, 3),
-('00:05:00', 'local', 3, 2),
+('local', 1, 2),
+('local', 2, 3),
+('local', 3, 4),
+('local', 4, 1),
 
--- Revised Intertown System Routes
-('01:05:00', 'intertown', 10, 1),
-('01:05:00', 'intertown', 1, 9),
-('01:05:00', 'intertown', 1, 7),
-('01:05:00', 'intertown', 1, 5),
-('01:05:00', 'intertown', 9, 13),
-('01:05:00', 'intertown', 9, 11),
-('01:05:00', 'intertown', 11, 13),
-('01:05:00', 'intertown', 7, 8),
-('01:05:00', 'intertown', 7, 6),
-('01:05:00', 'intertown', 6, 12),
-('01:05:00', 'intertown', 12, 13),
-('01:05:00', 'intertown', 8, 7),
-('01:05:00', 'intertown', 6, 12),
+-- Intertown System Routes
+('intertown', 5, 2), -- 5
+('intertown', 2, 5),
+('intertown', 2, 6),
+('intertown', 6, 2),
+('intertown', 2, 7),
+('intertown', 7, 2), -- 10
+('intertown', 2, 10),
+('intertown', 10, 2),
+('intertown', 7, 13),
+('intertown', 13, 7),
+('intertown', 7, 12), -- 15
+('intertown', 12, 7),
+('intertown', 12, 13),
+('intertown', 13, 12),
+('intertown', 13, 8),
+('intertown', 8, 13), -- 20
+('intertown', 8, 9),
+('intertown', 9, 8),
+('intertown', 9, 10),
+('intertown', 10, 9),
+('intertown', 10, 11), -- 25
+('intertown', 11, 10);
 
-('00:10:00', 'local', 2, 4),
-('00:05:00', 'local', 4, 3),
-('00:05:00', 'local', 3, 2),
-('00:10:00', 'local', 4, 2),
-('00:15:00', 'local', 3, 4),
-
-('01:10:00', 'intertown', 10, 7),
-('01:10:00', 'intertown', 10, 5),
-('01:05:00', 'intertown', 10, 1),
-('01:10:00', 'intertown', 10, 9),
-('01:10:00', 'intertown', 1, 13),
-('01:15:00', 'intertown', 7, 11),
-('01:15:00', 'intertown', 7, 13),
-('01:10:00', 'intertown', 6, 13),
-('01:10:00', 'intertown', 6, 8),
-('01:05:00', 'intertown', 12, 13),
-('01:20:00', 'intertown', 8, 11),
-('01:10:00', 'intertown', 8, 6),
-('01:05:00', 'intertown', 13, 12),
-('01:20:00', 'intertown', 11, 8),
-('01:10:00', 'intertown', 9, 12),
-('01:15:00', 'intertown', 9, 6),
-('01:10:00', 'intertown', 9, 7),
-('01:10:00', 'intertown', 7, 10),
-('01:10:00', 'intertown', 13, 6),
-('01:15:00', 'intertown', 13, 7),
-('01:10:00', 'intertown', 12, 9),
-('01:20:00', 'intertown', 12, 10),
-('01:15:00', 'intertown', 8, 4),
-('01:15:00', 'intertown', 13, 10),
-('01:20:00', 'intertown', 13, 3);
-
-INSERT INTO TRIP (departure, arrival, train_id, route_id, schedule_id)
+INSERT INTO TRIP (departure, arrival, cost, train_id, route_id, schedule_id)
 VALUES
-('2024-07-25 08:00:00', '2024-07-25 09:05:00', 3, 13, 1),
-('2024-07-30 13:00:00', '2024-07-30 14:05:00', 2, 14, 2),
-('2024-08-04 12:30:00', '2024-08-04 13:35:00', 5, 15, 3),
-('2024-08-09 10:45:00', '2024-08-09 11:50:00', 4, 16, 4),
-('2024-08-14 09:05:00', '2024-08-14 10:10:00', 1, 17, 5),
-('2024-07-25 14:20:00', '2024-07-25 14:30:00', 2, 18, 1),
-('2024-07-30 08:10:00', '2024-07-30 08:15:00', 3, 19, 2),
-('2024-08-04 07:30:00', '2024-08-04 07:35:00', 4, 20, 3),
-('2024-08-09 11:00:00', '2024-08-09 11:10:00', 5, 21, 4),
-('2024-08-14 16:40:00', '2024-08-14 16:55:00', 1, 22, 5),
-('2024-07-25 09:15:00', '2024-07-25 10:25:00', 2, 23, 1),
-('2024-07-30 12:00:00', '2024-07-30 13:10:00', 3, 24, 2),
-('2024-08-04 15:30:00', '2024-08-04 16:35:00', 4, 25, 3),
-('2024-08-09 10:20:00', '2024-08-09 11:30:00', 5, 26, 4),
-('2024-08-14 08:50:00', '2024-08-14 10:00:00', 1, 27, 5),
-('2024-07-25 14:15:00', '2024-07-25 15:30:00', 2, 28, 1),
-('2024-07-30 13:30:00', '2024-07-30 14:45:00', 3, 29, 2),
-('2024-08-04 10:40:00', '2024-08-04 11:50:00', 4, 30, 3),
-('2024-08-09 16:00:00', '2024-08-09 17:10:00', 5, 31, 4),
-('2024-08-14 09:25:00', '2024-08-14 10:30:00', 1, 32, 5),
-('2024-07-25 12:40:00', '2024-07-25 14:00:00', 2, 33, 1),
-('2024-07-30 10:05:00', '2024-07-30 11:15:00', 3, 34, 2),
-('2024-08-04 07:50:00', '2024-08-04 09:05:00', 4, 35, 3),
-('2024-08-09 14:30:00', '2024-08-09 11:40:00', 5, 36, 4);
+-- Local trips
+('2024-11-24 09:05:00', '2024-11-24 09:10:00', 2, 1, 1, 1),
+('2024-11-24 09:12:00', '2024-11-24 09:17:00', 2, 1, 2, 1),
+('2024-11-24 09:19:00', '2024-11-24 09:24:00', 2, 1, 3, 1),
+('2024-11-24 09:26:00', '2024-11-24 09:31:00', 2, 1, 4, 1),
+
+-- Intertown trips
+('2024-11-25 09:05:00', '2024-11-25 10:15:00', 5, 3, 5, 2),
+('2024-11-25 10:17:00', '2024-11-25 11:30:00', 6, 3, 9, 2),
+('2024-11-25 11:33:00', '2024-11-25 12:48:00', 7, 3, 15, 2),
+('2024-11-25 12:50:00', '2024-11-25 13:58:00', 8, 3, 17, 2),
+('2024-11-25 14:00:00', '2024-11-25 14:47:00', 4, 3, 19, 2),
+('2024-11-25 14:50:00', '2024-11-25 15:42:00', 5, 3, 21, 2),
+('2024-11-25 15:44:00', '2024-11-25 16:31:00', 7, 3, 23, 2),
+('2024-11-25 16:35:00', '2024-11-25 17:21:00', 8, 3, 12, 2);
 
 INSERT INTO TICKET_TRIP (ticket_id,trip_id)
 VALUES
 (1,1),
-(2,1),
-(3,1),
-(4,1),
-(5,2),
-(6,3),
-(7,4),
-(8,2),
-(9,3),
-(10,5),
-(11,6),
-(12,6),
-(13,7),
-(14,8),
-(15,9),
-(16,9),
-(17,10),
-(18,11),
-(19,11);
+(1,2),
+(1,3),
+(2,5),
+(2,6),
+(2,7),
+(2,8),
+(2,9);
 
 -- SELECT * FROM TRAIN;
 -- SELECT * FROM CREW;
@@ -306,7 +243,7 @@ VALUES
 -- SELECT * FROM TICKET;
 -- SELECT * FROM TRIP_SCHEDULE;
 -- SELECT * FROM STATION;
--- SELECT * FROM ROUTES;
+-- SELECT * FROM ROUTE;
 -- SELECT * FROM TRIP;
 -- SELECT * FROM TICKET_TRIP;
 
