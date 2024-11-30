@@ -21,3 +21,39 @@ function dbtest() {
       document.body.appendChild(template.content)
     })
 }
+
+function getMaintenanceLog() {
+  const id = document.getElementById("maintenance_id").value
+  const cd = document.getElementById("cond").value
+  const dt = document.getElementById("date").value
+
+  filters = {cond: cd, maintenance_id: id, log_date: dt}
+  for (let key of Object.keys(filters)) {
+    if (filters[key] === '')
+      delete filters[key];
+  }
+
+  const queryParams = new URLSearchParams(filters).toString();
+
+  fetch(`/api/logs?${queryParams}`)
+    .then(res => res.json())
+    .then((res) =>{
+      // will fix the formatting of this later
+      const logTable = document.createElement('ul')
+      for (const maintenanceLog of res){ 
+        const logElement = document.createElement('li')
+        logElement.append('Maintenance id: ' + maintenanceLog['maintenance_id'])
+        const logCols = document.createElement('ul')
+        logElement.append(logCols)
+        for (const col in maintenanceLog){
+          if (col == 'maintenance_id') continue
+          const logCol = document.createElement('li')
+          const elem = col + ': ' + maintenanceLog[col]
+          logCol.append(elem)
+          logCols.append(logCol)
+        }
+        logTable.append(logElement)
+      }
+      app.append(logTable)
+    })
+}

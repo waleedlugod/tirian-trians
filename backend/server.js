@@ -29,7 +29,21 @@ app.get('/api/db_test', (req, res) => {
 })
 
 app.get('/api/logs', (req, res) => {
-  db.query('SELECT * FROM MAINTENANCE_LOG', (error, results, fields) => {
+  let query = "SELECT * FROM MAINTENANCE_LOG";
+  const filters = [];
+
+  for (const param in req.query) {
+    console.log(param)
+    if (param == 'log_date'){
+      filters.push(`${param} BETWEEN ${db.escape(req.query[param] + ' 00:00:00')} AND ${db.escape(req.query[param] + ' 23:59:59')} `)
+    }else
+      filters.push(`${param} = ${db.escape(req.query[param])}`);
+  }
+  console.log(filters)
+  if (filters.length > 0) {
+    query += " WHERE " + filters.join(" AND ");
+  }
+  db.query(query, (error, results, fields) => {
     res.send(results)
     console.log(error)
     console.log(results)
