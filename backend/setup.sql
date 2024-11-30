@@ -9,16 +9,19 @@ INSERT INTO test(name) VALUES("tt");
 
 CREATE TABLE TRAIN(
     train_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    model VARCHAR(5) NOT NULL,
-    max_speed INT NOT NULL,
-    seat_count INT NOT NULL,
-    toilet_count INT NOT NULL,
-    has_reclining_seats BOOL NOT NULL,
-    has_folding_tables BOOL NOT NULL,
-    has_disability_access BOOL NOT NULL,
-    has_luggage_storage BOOL NOT NULL,
-    has_vending_machines BOOL NOT NULL,
-    has_food_service BOOL NOT NULL
+    model VARCHAR(5) NOT NULL DEFAULT 'S-000',
+    max_speed INT NOT NULL DEFAULT 60,
+    seat_count INT NOT NULL DEFAULT 10,
+    toilet_count INT NOT NULL DEFAULT 0,
+    has_reclining_seats BOOL NOT NULL DEFAULT FALSE,
+    has_folding_tables BOOL NOT NULL DEFAULT FALSE,
+    has_disability_access BOOL NOT NULL DEFAULT FALSE,
+    has_luggage_storage BOOL NOT NULL DEFAULT FALSE,
+    has_vending_machines BOOL NOT NULL DEFAULT FALSE,
+    has_food_service BOOL NOT NULL DEFAULT FALSE,
+    CONSTRAINT CK_model CHECK (model RLIKE '[AS]-[0-9]{3}'),
+    CONSTRAINT CK_max_speed CHECK (max_speed > 60),
+    CONSTRAINT CK_seat_count CHECK (seat_count > 10)
 );
 
 CREATE TABLE CREW(
@@ -54,7 +57,8 @@ CREATE TABLE TICKET(
     total_cost INT NOT NULL,
     date_purchased DATETIME NOT NULL,
     passenger_id INT NOT NULL,
-    FOREIGN KEY (passenger_id) REFERENCES PASSENGER(passenger_id)
+    FOREIGN KEY (passenger_id) REFERENCES PASSENGER(passenger_id),
+    CONSTRAINT CK_cost CHECK (total_cost >= 2)
 );
 
 CREATE TABLE TRIP_SCHEDULE(
@@ -81,13 +85,15 @@ CREATE TABLE TRIP(
     trip_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
     departure TIME NOT NULL,
     arrival TIME NOT NULL,
-    cost INT NOT NULL,
+    cost INT NOT NULL DEFAULT 2,
     train_id INT NOT NULL,
     route_id INT NOT NULL,
     schedule_id INT NOT NULL,
     FOREIGN KEY (train_id) REFERENCES TRAIN(train_id),
     FOREIGN KEY (route_id) REFERENCES ROUTE(route_id),
-    FOREIGN KEY (schedule_id) REFERENCES TRIP_SCHEDULE(schedule_id)
+    FOREIGN KEY (schedule_id) REFERENCES TRIP_SCHEDULE(schedule_id),
+    CONSTRAINT CK_travel_time CHECK (TIMEDIFF(arrival, departure) > TIME('00:00:00')),
+    CONSTRAINT CK_cost CHECK (cost >= 2)
 );
 
 CREATE TABLE TICKET_TRIP(
@@ -128,7 +134,6 @@ VALUES
 ('2024-06-18 13:30:22',"Weekly wash","very good",2,3),
 ('2024-06-18 09:13:48',"Vending Machine Restock","ok",3,5),
 ('2024-06-18 15:01:55',"Checked perpetual motion engine","bad",1,1),
-('2024-06-18 18:17:36',"Oppressed lower class to back carriage","very good",5,4),
 ('2024-06-18 22:44:03',"Repainted exterior","ok",4,2),
 ('2024-06-19 04:39:21',"Brake replacement","bad",2,5),
 ('2024-06-19 07:41:35',"Seat dusting","excellent",5,1),
@@ -160,7 +165,7 @@ VALUES
 
 INSERT INTO TICKET (total_cost,date_purchased,passenger_id)
 VALUES
-(6,'2024-11-24',1),
+(5,'2024-11-24',1),
 (30,'2024-11-25',2);
 
 INSERT INTO TRIP_SCHEDULE (schedule_date)
@@ -219,20 +224,19 @@ VALUES
 INSERT INTO TRIP (departure, arrival, cost, train_id, route_id, schedule_id)
 VALUES
 -- Local trips
-('2024-11-24 09:05:00', '2024-11-24 09:10:00', 2, 1, 1, 1),
-('2024-11-24 09:12:00', '2024-11-24 09:17:00', 2, 1, 2, 1),
-('2024-11-24 09:19:00', '2024-11-24 09:24:00', 2, 1, 3, 1),
-('2024-11-24 09:26:00', '2024-11-24 09:31:00', 2, 1, 4, 1),
-
+('09:05:00', '09:10:00', 2, 1, 1, 1),
+('09:12:00', '09:17:00', 2, 1, 2, 1),
+('09:19:00', '09:24:00', 2, 1, 3, 1),
+('09:26:00', '09:31:00', 2, 1, 4, 1),
 -- Intertown trips
-('2024-11-25 09:05:00', '2024-11-25 10:15:00', 5, 3, 5, 2),
-('2024-11-25 10:17:00', '2024-11-25 11:30:00', 6, 3, 9, 2),
-('2024-11-25 11:33:00', '2024-11-25 12:48:00', 7, 3, 15, 2),
-('2024-11-25 12:50:00', '2024-11-25 13:58:00', 8, 3, 17, 2),
-('2024-11-25 14:00:00', '2024-11-25 14:47:00', 4, 3, 19, 2),
-('2024-11-25 14:50:00', '2024-11-25 15:42:00', 5, 3, 21, 2),
-('2024-11-25 15:44:00', '2024-11-25 16:31:00', 7, 3, 23, 2),
-('2024-11-25 16:35:00', '2024-11-25 17:21:00', 8, 3, 12, 2);
+('09:05:00', '10:15:00', 5, 3, 5, 2),
+('10:17:00', '11:30:00', 6, 3, 9, 2),
+('11:33:00', '12:48:00', 7, 3, 15, 2),
+('12:50:00', '13:58:00', 8, 3, 17, 2),
+('14:00:00', '14:47:00', 4, 3, 19, 2),
+('14:50:00', '15:42:00', 5, 3, 21, 2),
+('15:44:00', '16:31:00', 7, 3, 23, 2),
+('16:35:00', '17:21:00', 8, 3, 12, 2);
 
 INSERT INTO TICKET_TRIP (ticket_id,trip_id)
 VALUES
