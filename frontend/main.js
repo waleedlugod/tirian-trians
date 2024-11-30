@@ -26,8 +26,9 @@ function getMaintenanceLog() {
   const id = document.getElementById("maintenance_id").value
   const cd = document.getElementById("cond").value
   const dt = document.getElementById("date").value
+  const cn = document.getElementById("crew-name").value
 
-  filters = {cond: cd, maintenance_id: id, log_date: dt}
+  filters = {cond: cd, maintenance_id: id, log_date: dt, crew_name: cn}
   for (let key of Object.keys(filters)) {
     if (filters[key] === '')
       delete filters[key];
@@ -39,14 +40,15 @@ function getMaintenanceLog() {
     .then(res => res.json())
     .then((res) =>{
       // will fix the formatting of this later
+      app.innerHTML=''
       const logTable = document.createElement('ul')
       for (const maintenanceLog of res){ 
         const logElement = document.createElement('li')
-        logElement.append('Maintenance id: ' + maintenanceLog['maintenance_id'])
+        logElement.append('Maintenance Log #: ' + maintenanceLog['Maintenance ID'])
         const logCols = document.createElement('ul')
         logElement.append(logCols)
         for (const col in maintenanceLog){
-          if (col == 'maintenance_id') continue
+          if (col == 'Maintenance ID') continue
           const logCol = document.createElement('li')
           const elem = col + ': ' + maintenanceLog[col]
           logCol.append(elem)

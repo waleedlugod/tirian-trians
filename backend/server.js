@@ -11,6 +11,8 @@ export const db = mysql.createConnection({
   database: 'tt'
 })
 
+db.connect()
+
 // serve files in frontend folder by default
 app.use(express.static('frontend'))
 
@@ -29,20 +31,23 @@ app.get('/api/db_test', (req, res) => {
 })
 
 app.get('/api/logs', (req, res) => {
-  let query = "SELECT * FROM MAINTENANCE_LOG";
+  let query = "SELECT maintenance_id 'Maintenance ID', log_date 'Log Date', task 'Task', cond 'Condition', train_id 'Train ID',CONCAT(last_name, ', ',initial, '.') 'Crew Name' FROM MAINTENANCE_LOG ml, CREW c WHERE ml.crew_id = c.crew_id";
   const filters = [];
 
   for (const param in req.query) {
-    console.log(param)
     if (param == 'log_date'){
       filters.push(`${param} BETWEEN ${db.escape(req.query[param] + ' 00:00:00')} AND ${db.escape(req.query[param] + ' 23:59:59')} `)
+    }else if (param == 'crew_name'){
+      filters.push(`CONCAT(last_name, ', ',initial, '.') LIKE ${db.escape('%'+req.query[param]+'%%')}`)
     }else
       filters.push(`${param} = ${db.escape(req.query[param])}`);
   }
   console.log(filters)
   if (filters.length > 0) {
-    query += " WHERE " + filters.join(" AND ");
+    query += " AND " + filters.join(" AND ");
   }
+  
+  console.log(query)
   db.query(query, (error, results, fields) => {
     res.send(results)
     console.log(error)

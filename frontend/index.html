@@ -11,7 +11,7 @@
     <div id="app">a</div>
     <button onclick="buttontest()">Click me test</button>
     <button onclick="dbtest()">Click me dbtest</button>
-    <div>
+    <form id="maintenance-log-filter">
       <label for="maintenance_id">Maintenance ID:</label>
       <input type="number" id="maintenance_id" name="maintenance_id">
       
@@ -26,7 +26,10 @@
       
       <label for="date">Date:</label>
       <input type="date" id="date" name="date">
-    </div>
-    <button onclick="getMaintenanceLog()">Maintenance Log</button>
+      
+      <label for="crew-name">Crew Name:</label>
+      <input type="text" id="crew-name" name="crew-name">
+      <button type="button" onclick="getMaintenanceLog()">Maintenance Log</button>
+    </form>
   </body>
 </html>
