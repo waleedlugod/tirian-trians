@@ -101,7 +101,8 @@ CREATE TABLE TICKET_TRIP(
     ticket_id INT NOT NULL,
     trip_id INT NOT NULL,
     FOREIGN KEY (ticket_id) REFERENCES TICKET(ticket_id),
-    FOREIGN KEY (trip_id) REFERENCES TRIP(trip_id)
+    FOREIGN KEY (trip_id) REFERENCES TRIP(trip_id),
+	UNIQUE (ticket_id, trip_id)
 );
 
 DELIMITER //
