@@ -10,8 +10,8 @@
   <body>
     <!-- <button onclick="buttontest()">Click me test</button>
     <button onclick="dbtest()">Click me dbtest</button> -->
-    <form id="maintenance-log-filter">
-      <label for="maintenance_id">Maintenance ID:</label>
+    <form id="maintenance-log-filter" method='post' action='/api/logs'>
+      <label for="maintenance_id">maintenance id:</label>
       <input type="number" id="maintenance_id" name="maintenance_id">
       
       <label for="cond">Condition:</label>
@@ -28,8 +28,20 @@
       
       <label for="crew-name">Crew Name:</label>
       <input type="text" id="crew-name" name="crew-name">
-      <button type="button" onclick="getMaintenanceLog()">Maintenance Log</button>
+      <!-- <button type="button" onclick="getMaintenanceLog()">Maintenance Log</button> -->
+      <input type="submit">
       <div id="app"></div>
+    </form>
+    <form id="testpost" method='post' action='/api/logs'>
+      <label for="cond">Condition:</label>
+      <select id="cond" name="cond">
+        <option value="">-- Select Condition --</option>
+        <option value="bad">Bad</option>
+        <option value="ok">Okay</option>
+        <option value="very good">Very Good</option>
+        <option value="excellent">Excellent</option>
+      </select>
+      <input type="submit">
     </form>
   </body>
 </html>

@@ -61,4 +61,11 @@ app.get('/api/logs', (req, res) => {
     console.log(results)
     console.log(fields)
   })
+	console.log(req.method)
+})
+
+
+app.post('/api/logs', (req, res) => {
+	console.log(req)
+	res.send(200)
 })
