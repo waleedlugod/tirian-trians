@@ -15,6 +15,8 @@ db.connect()
 
 // serve files in frontend folder by default
 app.use(express.static('frontend'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/api/test', (req, res) => {
   const data = {test: 'this is some data'}
@@ -66,6 +68,6 @@ app.get('/api/logs', (req, res) => {
 
 
 app.post('/api/logs', (req, res) => {
-	console.log(req)
+	console.log(req.body)
 	res.send(200)
 })
