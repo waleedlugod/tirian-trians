@@ -32,14 +32,14 @@ app.get('/api/db_test', (req, res) => {
   })
 })
 
-app.get('/api/stations', (req, res) => {
+app.get('/api/logs', (req, res) => {
   let crewNameConcat = "CONCAT(last_name, ', ',initial, '.')"
 
-  let sQuery1 = "SELECT station_id 'Station ID', station_name 'Station Name' FROM STATION"
-  // let sQuery2 = `cond 'Condition', train_id 'Train ID',${crewNameConcat} 'Crew Name' `
-  // let jQurery = "FROM MAINTENANCE_LOG ml JOIN CREW c ON ml.crew_id = c.crew_id "
+  let sQuery1 = "SELECT maintenance_id 'Maintenance ID', log_date 'Log Date', task 'Task', "
+  let sQuery2 = `cond 'Condition', train_id 'Train ID',${crewNameConcat} 'Crew Name' `
+  let jQurery = "FROM MAINTENANCE_LOG ml JOIN CREW c ON ml.crew_id = c.crew_id "
 
-  let query = sQuery1 // + sQuery2 + jQurery
+  let query = sQuery1 + sQuery2 + jQurery
   const filters = [];
 
   for (const param in req.query) {
@@ -68,6 +68,32 @@ app.get('/api/stations', (req, res) => {
 
 
 app.post('/api/logs', (req, res) => {
+	console.log(req.body)
+	res.send(200)
+})
+
+app.get('/api/stations', (req, res) => {
+  let crewNameConcat = "CONCAT(last_name, ', ',initial, '.')"
+
+  let sQuery1 = "SELECT station_id 'Station ID', station_name 'Station Name' FROM STATION"
+  // let sQuery2 = `cond 'Condition', train_id 'Train ID',${crewNameConcat} 'Crew Name' `
+  // let jQurery = "FROM MAINTENANCE_LOG ml JOIN CREW c ON ml.crew_id = c.crew_id "
+
+  let query = sQuery1 // + sQuery2 + jQurery
+  const filters = [];
+  
+  console.log(query)
+  db.query(query, (error, results, fields) => {
+    res.send(results)
+    console.log(error)
+    console.log(results)
+    console.log(fields)
+  })
+	console.log(req.method)
+})
+
+
+app.post('/api/stations', (req, res) => {
 	console.log(req.body)
 	res.send(200)
 })
