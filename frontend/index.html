@@ -59,5 +59,25 @@
     </form>
     <div id="tickets"></div>
     <script src="main.js"></script>
+    <form id="maintenance-log-post">
+      <label for="maintenance_id">maintenance id:</label>
+      <input type="number" id="maintenance_id" name="maintenance_id">
+      
+      <label for="cond">Condition:</label>
+      <select id="cond" name="cond">
+        <option value="">-- Select Condition --</option>
+        <option value="bad">Bad</option>
+        <option value="ok">Okay</option>
+        <option value="very good">Very Good</option>
+        <option value="excellent">Excellent</option>
+      </select>
+      
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date">
+      
+      <label for="crew-name">Crew Name:</label>
+      <input type="text" id="crew-name" name="crew-name">
+      <button type="button" onclick="postMaintenanceLog()">Maintenance Log</button>
+    </form>
   </body>
 </html>
