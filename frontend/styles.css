@@ -3,3 +3,173 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: 'WaleedFont';
+  src: url('fonts/Raleway-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'WaleedFont', sans-serif; ;
+  background: linear-gradient(to bottom right, rgb(85, 8, 85), rgb(59, 8, 8),rgb(59, 8, 8), rgb(37, 7, 44), rgb(37, 7, 44), rgb(0, 0, 0));
+  color:#ffffff;
+  padding: 20px;
+  letter-spacing: 2px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  background: linear-gradient(to right, #33333359, #222222);
+  border-radius: 8px;
+  box-shadow: 0 20px 28px rgba(165, 93, 93, 0.5);
+  padding: 50px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #ffffff;  
+}
+
+input[type="number"],
+input[type="date"],
+input[type="text"],
+select {
+  width: 100%;
+  padding: 7px;
+  margin-bottom: 15px;
+  border: 2px solid transparent;  
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: 'WaleedFont';
+  background: linear-gradient(to right, black, rgb(31, 31, 31));
+  color: #fff; 
+}
+
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="text"]:focus,
+select:focus,
+button:focus {
+  outline: none;
+  border-color: #b434db;  
+}
+
+button {
+  padding:10px;
+  border-radius: 10px;
+  background-color:#751d50;
+  color: white;
+  border: none;
+  text-align:left;
+  padding-left:10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top:20px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover{
+  background-color:#9b3c73;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled {
+  background-color: #ff6edb;
+  cursor: not-allowed;
+}
+
+#maintenance,
+#station {
+
+  margin-top: 50px;
+
+}
+
+select {
+  display: block;
+  width: auto;
+}
+
+select option {
+  padding: 10px;
+  background-color: #1d1d1d;  
+  color: hsl(0, 0%, 100%);  
+}
+
+#maintenance-log-filter button,
+#station-route-filter button {
+  width: auto;
+  margin-top: 10px;
+}
+
+#maintenance-log-filter button,
+#station-route-filter button,
+#station button {
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: #722ecc; 
+  color: white;
+  border: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+#maintenance-log-filter button:hover,
+#station-route-filter button:hover,
+#station button:hover {
+  background-color: #380c70;  
+  transition: background-color 0.3s ease;
+  font-style: italic;
+}
+
+#maintenance .data-query,
+#station .data-query,
+#tickets .data-query {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+  padding:30px;
+  color:white;
+  background-color: #000000b2;
+  font-size: 12px;
+  margin: 20px;
+  border-radius:10px;
+  box-shadow: 0 1px 8px rgba(165, 93, 93, 0.5);
+}
+
+.data-query li {
+	margin: 1rem;
+}
+
+@media (max-width: 600px) {
+  form {
+    padding: 15px;
+  }
+
+  input[type="number"],
+  input[type="date"],
+  input[type="text"],
+  select,
+  button {
+    font-size: 15px;
+  }
+
+  #maintenance-log-filter button,
+  #station-route-filter button {
+    width: 100%;
+  }
+
+}

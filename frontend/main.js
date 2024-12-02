@@ -19,6 +19,7 @@ function getMaintenanceLog() {
       app.innerHTML = "";
 
       const logTable = document.createElement("ul");
+			logTable.classList.add('data-query')
       for (const maintenanceLog of res) {
         const logElement = document.createElement("li");
         logElement.append(
@@ -48,6 +49,7 @@ function getStations() {
       app.innerHTML = "";
 
       const stationTable = document.createElement("ul");
+			stationTable.classList.add('data-query')
       for (const station of res) {
         const stationElement = document.createElement("li");
         const stationCols = document.createElement("ul");
@@ -76,6 +78,7 @@ function getDestinationRoutes() {
       app.innerHTML = "";
 
       const routesTable = document.createElement("ul");
+			routesTable.classList.add('data-query')
       for (const route of res) {
         const routeElement = document.createElement("li");
         const routeCols = document.createElement("ul");
@@ -104,6 +107,7 @@ function getOutgoingRoutes() {
       app.innerHTML = "";
 
       const routesTable = document.createElement("ul");
+			routesTable.classList.add('data-query')
       for (const route of res) {
         const routeElement = document.createElement("li");
         const routeCols = document.createElement("ul");
@@ -132,6 +136,7 @@ function getPassengerTickets() {
       app.innerHTML = "";
 
       const ticketsTable = document.createElement("ul");
+			ticketsTable.classList.add('data-query')
       for (const ticket of res) {
         const ticketRow = document.createElement("li");
         const ticketCols = document.createElement("ul");
