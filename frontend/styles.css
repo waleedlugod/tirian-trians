@@ -135,7 +135,10 @@ select option {
   font-style: italic;
 }
 
-#maintenance-div{
+#maintenance-div,
+#station-div,
+#ticket-div
+{
   display:flex;
   flex-wrap:wrap;
   justify-content: center;
