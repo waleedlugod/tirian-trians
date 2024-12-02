@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tirian Trains</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="main.js"></script>
+    <!-- Ensure main.js is loaded at the bottom of the body -->
   </head>
   <body>
-    <!-- <button onclick="buttontest()">Click me test</button>
-    <button onclick="dbtest()">Click me dbtest</button> -->
-    <form id="maintenance-log-filter" method='post' action='/api/logs'>
-      <label for="maintenance_id">maintenance id:</label>
+    <!-- Maintenance Log Filter Form -->
+    <!-- <form id="maintenance-log-filter">
+      <label for="maintenance_id">Maintenance ID:</label>
       <input type="number" id="maintenance_id" name="maintenance_id">
       
       <label for="cond">Condition:</label>
@@ -28,11 +27,16 @@
       
       <label for="crew-name">Crew Name:</label>
       <input type="text" id="crew-name" name="crew-name">
-      <!-- <button type="button" onclick="getMaintenanceLog()">Maintenance Log</button> -->
-      <input type="submit">
-      <div id="app"></div>
+      
+      <-- Submit button that will trigger the JavaScript -->
+      <button type="button" onclick="getStations()">Get All Stations</button>
     </form>
-    <form id="testpost" method='post' action='/api/logs'>
+
+    <!-- The div to display the fetched logs -->
+    <div id="app"></div>
+
+    <!-- Test POST Form (optional) -->
+    <!-- <form id="testpost" method="post" action="/api/logs">
       <label for="cond">Condition:</label>
       <select id="cond" name="cond">
         <option value="">-- Select Condition --</option>
@@ -42,6 +46,9 @@
         <option value="excellent">Excellent</option>
       </select>
       <input type="submit">
-    </form>
+    </form> -->
+
+    <!-- Load main.js just before closing the body tag -->
+    <script src="main.js"></script>
   </body>
 </html>

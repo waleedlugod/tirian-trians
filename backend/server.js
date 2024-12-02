@@ -32,29 +32,15 @@ app.get('/api/db_test', (req, res) => {
   })
 })
 
-app.get('/api/logs', (req, res) => {
+app.get('/api/stations', (req, res) => {
   let crewNameConcat = "CONCAT(last_name, ', ',initial, '.')"
 
-  let sQuery1 = "SELECT maintenance_id 'Maintenance ID', log_date 'Log Date', task 'Task', "
-  let sQuery2 = `cond 'Condition', train_id 'Train ID',${crewNameConcat} 'Crew Name' `
-  let jQurery = "FROM MAINTENANCE_LOG ml JOIN CREW c ON ml.crew_id = c.crew_id "
+  let sQuery1 = "SELECT station_id 'Station ID', station_name 'Station Name' FROM STATION"
+  // let sQuery2 = `cond 'Condition', train_id 'Train ID',${crewNameConcat} 'Crew Name' `
+  // let jQurery = "FROM MAINTENANCE_LOG ml JOIN CREW c ON ml.crew_id = c.crew_id "
 
-  let query = sQuery1 + sQuery2 + jQurery
+  let query = sQuery1 // + sQuery2 + jQurery
   const filters = [];
-
-  for (const param in req.query) {
-    if (param == 'log_date'){
-      filters.push(`${param} BETWEEN ${db.escape(req.query[param] + ' 00:00:00')}` + 
-        ` AND ${db.escape(req.query[param] + ' 23:59:59')} `)
-    }else if (param == 'crew_name'){
-      filters.push(`${crewNameConcat} LIKE ${db.escape('%'+req.query[param]+'%%')}`)
-    }else
-      filters.push(`${param} = ${db.escape(req.query[param])}`);
-  }
-  console.log(filters)
-  if (filters.length > 0) {
-    query += " WHERE " + filters.join(" AND ");
-  }
   
   console.log(query)
   db.query(query, (error, results, fields) => {
@@ -71,3 +57,4 @@ app.post('/api/logs', (req, res) => {
 	console.log(req.body)
 	res.send(200)
 })
+
