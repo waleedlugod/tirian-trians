@@ -15,15 +15,16 @@ function getMaintenanceLog() {
   fetch(`/api/logs?${queryParams}`)
     .then(res => res.json())
     .then((res) =>{
-      // will fix the formatting of this later
       const app = document.getElementById("maintenance");
       app.innerHTML=''
+
       const logTable = document.createElement('ul')
       for (const maintenanceLog of res){
         const logElement = document.createElement('li')
         logElement.append('Maintenance Log #: ' + maintenanceLog['Maintenance ID'])
         const logCols = document.createElement('ul')
         logElement.append(logCols)
+
         for (const col in maintenanceLog){
           if (col == 'Maintenance ID') continue
           const logCol = document.createElement('li')
@@ -41,101 +42,99 @@ function getStations() {
   fetch('/api/stations')
     .then(res => res.json())
     .then((res) => {
-      //console.log(res);
       const app = document.getElementById("station");
       app.innerHTML = '';
 
       const stationTable = document.createElement('ul');
-      
       for (const station of res) {
         const stationElement = document.createElement('li');
-        
         const stationCols = document.createElement('ul');
         stationElement.append(stationCols);
 
-        for (const col in station) {
-          
+        for (const col in station) { 
           const stationCol = document.createElement('li');
           const elem = `${col}: ${station[col]}`;
           stationCol.append(elem);
           stationCols.append(stationCol);
-        }
-
-        stationTable.append(stationElement);
-      }
-
-      app.append(stationTable);
+        }stationTable.append(stationElement);
+      }app.append(stationTable);
     });
 }
 
 function getDestinationRoutes() {
   const destination = document.getElementById("station_name").value;
-  const destjson = `destination=${destination}`;
-  //console.log(destination);
+  const destQuery = `destination=${destination}`;
 
-  fetch(`/api/destinationRoutes?${destjson}`)
+  fetch(`/api/destinationRoutes?${destQuery}`)
     .then(res => res.json())
     .then((res) => {
-
-      console.log(res);
       const app = document.getElementById("station");
       app.innerHTML = '';
 
       const routesTable = document.createElement('ul');
-      
       for (const route of res) {
         const routeElement = document.createElement('li');
-        
         const routeCols = document.createElement('ul');
         routeElement.append(routeCols);
 
         for (const col in route) {
-          
           const routeCol = document.createElement('li');
           const elem = `${col}: ${route[col]}`;
           routeCol.append(elem);
           routeCols.append(routeCol);
-        }
-
-        routesTable.append(routeElement);
-      }
-
-      app.append(routesTable);
+        } routesTable.append(routeElement);
+      } app.append(routesTable);
     });
 }
 
 function getOutgoingRoutes() {
-  const destination = document.getElementById("station_name").value;
-  const destjson = `destination=${destination}`;
-  //console.log(destination);
+  const origin = document.getElementById("station_name").value;
+  const originQuery = `origin=${origin}`;
 
-  fetch(`/api/outgoingRoutes?${destjson}`)
+  fetch(`/api/outgoingRoutes?${originQuery}`)
     .then(res => res.json())
     .then((res) => {
-
-      console.log(res);
       const app = document.getElementById("station");
       app.innerHTML = '';
 
       const routesTable = document.createElement('ul');
-      
       for (const route of res) {
         const routeElement = document.createElement('li');
-        
         const routeCols = document.createElement('ul');
         routeElement.append(routeCols);
 
         for (const col in route) {
-          
           const routeCol = document.createElement('li');
           const elem = `${col}: ${route[col]}`;
           routeCol.append(elem);
           routeCols.append(routeCol);
-        }
-
-        routesTable.append(routeElement);
-      }
-
-      app.append(routesTable);
+        } routesTable.append(routeElement);
+      } app.append(routesTable);
     });
+}
+
+function getPassengerTickets(){
+  const passengerName = document.getElementById('passenger-name').value;
+  const passengerNameQuery = `passenger=${passengerName}`;
+  console.log(passengerNameQuery)
+  fetch(`/api/tickets?${passengerNameQuery}`)
+    .then(res => res.json())
+    .then((res) => {
+      const app = document.getElementById("tickets")
+      app.innerHTML = ''
+      
+      const ticketsTable = document.createElement('ul');
+      for (const ticket of res){
+        const ticketRow = document.createElement('li');
+        const ticketCols = document.createElement('ul');
+        ticketRow.append(ticketCols);
+        
+        for (const col in ticket){
+          const ticketCol = document.createElement('li');
+          const elem = `${col}: ${ticket[col]}`;
+          ticketCol.append(elem)
+          ticketCols.append(ticketCol);
+        } ticketsTable.append(ticketRow);
+      } app.append(ticketsTable);
+    })
 }

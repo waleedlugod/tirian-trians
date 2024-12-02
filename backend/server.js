@@ -73,14 +73,8 @@ app.post('/api/logs', (req, res) => {
 })
 
 app.get('/api/stations', (req, res) => {
-  //let crewNameConcat = "CONCAT(last_name, ', ',initial, '.')"
 
-  let sQuery1 = "SELECT station_id 'Station ID', station_name 'Station Name' FROM STATION"
-  // let sQuery2 = `cond 'Condition', train_id 'Train ID',${crewNameConcat} 'Crew Name' `
-  // let jQurery = "FROM MAINTENANCE_LOG ml JOIN CREW c ON ml.crew_id = c.crew_id "
-
-  let query = sQuery1 // + sQuery2 + jQurery
-  const filters = [];
+  let query = "SELECT station_id 'Station ID', station_name 'Station Name' FROM STATION"
   
   console.log(query)
   db.query(query, (error, results, fields) => {
@@ -89,7 +83,6 @@ app.get('/api/stations', (req, res) => {
     console.log(results)
     console.log(fields)
   })
-	console.log(req.method)
 })
 
 
@@ -104,8 +97,6 @@ app.get('/api/destinationRoutes', (req, res) => {
   console.log(destination);
   let sQuery1 = "SELECT r.route_id 'Route ID', st.station_name 'Origin Station', s.station_name 'Destination Station' FROM ROUTE r , STATION s, STATION st WHERE r.destination_station_id = s.station_id AND st.station_id = r.origin_station_id AND r.destination_station_id = ";
   sQuery1 += destination;
-  
-  console.log(sQuery1);
 
   let query = sQuery1
   const filters = [];
@@ -117,29 +108,41 @@ app.get('/api/destinationRoutes', (req, res) => {
     console.log(results)
     console.log(fields)
   })
-	console.log(req.method)
 })
 
 
 app.get('/api/outgoingRoutes', (req, res) => {
-  console.log(req.query);
-  const destination = req.query.destination;
-  console.log(destination);
+  const origin = req.query.origin;
   let sQuery1 = "SELECT r.route_id 'Route ID', s.station_name 'Origin Station', st.station_name 'Destination Station' FROM ROUTE r , STATION s, STATION st WHERE r.origin_station_id = s.station_id AND st.station_id = r.destination_station_id AND r.origin_station_id =  ";
-  sQuery1 += destination;
-  
-  console.log(sQuery1);
+  sQuery1 += origin ;
 
   let query = sQuery1
   const filters = [];
   
-  console.log(query)
   db.query(query, (error, results, fields) => {
     res.send(results)
     console.log(error)
     console.log(results)
     console.log(fields)
   })
-	console.log(req.method)
 })
 
+app.get('/api/tickets', (req, res) => {
+  const name = req.query.passenger;
+
+  let passengerNameMacro = `CONCAT(given_name, ' ', middle_initial, '. ', last_name)`
+
+  let sQuery1 = `SELECT t.ticket_id, t.total_cost, t.date_purchased, p.passenger_id, `
+  let sQuery2 = `tr.departure, tr.arrival, tr.cost, ${passengerNameMacro} 'Passenger Name' `
+  let fQuery = `FROM TICKET t, TICKET_TRIP tt, TRIP tr, PASSENGER p `
+  let wQuery = `WHERE t.ticket_id = tt.ticket_id AND tr.trip_id = tt.trip_id AND p.passenger_id = t.passenger_id `
+  let nQuery = `AND ${passengerNameMacro} LIKE ${db.escape('%'+name+'%')}`
+
+  let query = sQuery1 + sQuery2 + fQuery + wQuery + nQuery;
+  db.query(query, (error, results, fields) => {
+    res.send(results)
+    console.log(error)
+    console.log(results)
+    console.log(fields)
+  })
+})

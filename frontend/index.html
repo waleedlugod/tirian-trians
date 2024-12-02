@@ -52,7 +52,12 @@
     <button type="button" onclick="getStations()">Get All Stations</button>
     <div id="station">
     </div>
-
+    <form action="/api/tickets">
+      <label for="passenger-name">Passenger Name:</label>
+      <input type="text" id="passenger-name" name="passenger-name">
+      <button type="button" onclick="getPassengerTickets()">Find Tickets</button>
+    </form>
+    <div id="tickets"></div>
     <script src="main.js"></script>
   </body>
 </html>
