@@ -43,11 +43,11 @@ app.get('/api/logs', (req, res) => {
   const filters = [];
 
   for (const param in req.query) {
-    if (param == 'log_date'){
-      filters.push(`${param} BETWEEN ${db.escape(req.query[param] + ' 00:00:00')}` + 
+    if (param == 'date'){
+      filters.push(`log_date BETWEEN ${db.escape(req.query[param] + ' 00:00:00')}` + 
         ` AND ${db.escape(req.query[param] + ' 23:59:59')} `)
-    }else if (param == 'crew_name'){
-      filters.push(`${crewNameConcat} LIKE ${db.escape('%'+req.query[param]+'%%')}`)
+    }else if (param == 'crew-name'){
+      filters.push(`${crewNameConcat} LIKE ${db.escape('%'+req.query[param]+'%')}`)
     }else
       filters.push(`${param} = ${db.escape(req.query[param])}`);
   }

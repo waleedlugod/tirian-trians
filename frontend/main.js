@@ -23,16 +23,16 @@ function dbtest() {
 }
 
 function getMaintenanceLog() {
-  const id = document.getElementById("maintenance_id").value
-  const cd = document.getElementById("cond").value
-  const dt = document.getElementById("date").value
-  const cn = document.getElementById("crew-name").value
+  const form = document.getElementById('maintenance-log-filter');
+  const formData = new FormData(form);
 
-  filters = {cond: cd, maintenance_id: id, log_date: dt, crew_name: cn}
-  for (let key of Object.keys(filters)) {
-    if (filters[key] === '')
-      delete filters[key];
+  const filters = {}
+  for (let [key, value] of formData.entries()) {
+    if (value !== '') {
+      filters[key] = value
+    }
   }
+  console.log(filters)
 
   const queryParams = new URLSearchParams(filters).toString();
 
@@ -42,7 +42,7 @@ function getMaintenanceLog() {
       // will fix the formatting of this later
       app.innerHTML=''
       const logTable = document.createElement('ul')
-      for (const maintenanceLog of res){ 
+      for (const maintenanceLog of res){
         const logElement = document.createElement('li')
         logElement.append('Maintenance Log #: ' + maintenanceLog['Maintenance ID'])
         const logCols = document.createElement('ul')
