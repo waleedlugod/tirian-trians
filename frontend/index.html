@@ -38,21 +38,7 @@
     <div id="maintenance"></div>
     <form id="station-route-filter" method="" action="/api/stations">
       <label for="station_name">Station Name:</label>
-      <select id="station_name" name="station_name">
-        <option value="">-- Select Station --</option>
-        <option value="1">Beaver's Dam</option>
-        <option value="2">Allies' Enclave</option>
-        <option value="3">The Wardrobe</option>
-        <option value="4">The Lamp Post</option>
-        <option value="5">Mr. Tumms</option>
-        <option value="6">Aslan's Camp</option>
-        <option value="7">Cauldron Pool</option>
-        <option value="8">Witch's Camp</option>
-        <option value="9">The Stone Table</option>
-        <option value="10">Dancing Lawn</option>
-        <option value="11">Anvard</option>
-        <option value="12">Cherry Tree</option>
-        <option value="13">Father Christmas</option>
+      <select id="station_name" name="station_name" onfocus='updateStations()'>
       </select>
       <button type="button" onclick="getDestinationRoutes()">
         Get Routes to Station

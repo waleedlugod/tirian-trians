@@ -168,3 +168,23 @@ function postMaintenanceLog() {
   }).then((res) => console.log(res));
 }
 
+function updateStations() {
+  fetch("/api/stations")
+    .then((res) => res.json())
+    .then((res) => {
+      const selectEl = document.getElementById("station_name");
+			selectEl.innerHTML = ""
+			res.map((e, i) => {
+				const option = document.createElement("option")
+				if (i === 0) {
+					option.setAttribute("value", "")
+					option.innerText = "-- Select Destination --"
+				} else {
+					option.setAttribute("value", i)
+					option.innerText = e["Station Name"]
+				}
+				selectEl.append(option)
+			})
+    });
+}
+updateStations()
