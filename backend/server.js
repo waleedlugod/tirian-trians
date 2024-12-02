@@ -73,7 +73,7 @@ app.post('/api/logs', (req, res) => {
 })
 
 app.get('/api/stations', (req, res) => {
-  let crewNameConcat = "CONCAT(last_name, ', ',initial, '.')"
+  //let crewNameConcat = "CONCAT(last_name, ', ',initial, '.')"
 
   let sQuery1 = "SELECT station_id 'Station ID', station_name 'Station Name' FROM STATION"
   // let sQuery2 = `cond 'Condition', train_id 'Train ID',${crewNameConcat} 'Crew Name' `
@@ -94,6 +94,34 @@ app.get('/api/stations', (req, res) => {
 
 
 app.post('/api/stations', (req, res) => {
+	console.log(req.body)
+	res.send(200)
+})
+
+app.get('/api/routes', (req, res) => {
+  console.log(req.query);
+  const destination = req.query.destination;
+  console.log(destination);
+  let sQuery1 = "SELECT r.route_id 'Route ID', st.station_name 'Origin Station', s.station_name 'Destination Station' FROM ROUTE r , STATION s, STATION st WHERE r.destination_station_id = s.station_id AND st.station_id = r.origin_station_id AND r.destination_station_id = ";
+  sQuery1 += destination;
+  
+  console.log(sQuery1);
+
+  let query = sQuery1
+  const filters = [];
+  
+  console.log(query)
+  db.query(query, (error, results, fields) => {
+    res.send(results)
+    console.log(error)
+    console.log(results)
+    console.log(fields)
+  })
+	console.log(req.method)
+})
+
+
+app.post('/api/routes', (req, res) => {
 	console.log(req.body)
 	res.send(200)
 })

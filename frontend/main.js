@@ -11,7 +11,7 @@ function getMaintenanceLog() {
   console.log(filters)
 
   const queryParams = new URLSearchParams(filters).toString();
-
+  console.log(queryParams);
   fetch(`/api/logs?${queryParams}`)
     .then(res => res.json())
     .then((res) =>{
@@ -41,7 +41,7 @@ function getStations() {
   fetch('/api/stations')
     .then(res => res.json())
     .then((res) => {
-      console.log(res);
+      //console.log(res);
       const app = document.getElementById("station");
       app.innerHTML = '';
 
@@ -65,5 +65,41 @@ function getStations() {
       }
 
       app.append(stationTable);
+    });
+}
+
+function getRoutes() {
+  const destination = document.getElementById("station_name").value;
+  const destjson = `destination=${destination}`;
+  //console.log(destination);
+
+  fetch(`/api/routes?${destjson}`)
+    .then(res => res.json())
+    .then((res) => {
+
+      console.log(res);
+      const app = document.getElementById("station");
+      app.innerHTML = '';
+
+      const routesTable = document.createElement('ul');
+      
+      for (const route of res) {
+        const routeElement = document.createElement('li');
+        
+        const routeCols = document.createElement('ul');
+        routeElement.append(routeCols);
+
+        for (const col in route) {
+          
+          const routeCol = document.createElement('li');
+          const elem = `${col}: ${route[col]}`;
+          routeCol.append(elem);
+          routeCols.append(routeCol);
+        }
+
+        routesTable.append(routeElement);
+      }
+
+      app.append(routesTable);
     });
 }
