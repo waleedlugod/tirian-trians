@@ -150,8 +150,10 @@ select option {
   box-shadow: 0 1px 8px rgba(165, 93, 93, 0.5);
 }
 
-.data-query li {
+.data-query > li {
 	margin: 1rem;
+	padding: 1rem;
+	border: solid 1px white;
 }
 
 @media (max-width: 600px) {

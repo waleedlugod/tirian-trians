@@ -42,7 +42,7 @@ app.get("/api/logs", (req, res) => {
   let jQurery =
     "FROM MAINTENANCE_LOG ml JOIN CREW c ON ml.crew_id = c.crew_id ";
   let oQuery = `ORDER BY maintenance_id ASC `
-  let query = sQuery1 + sQuery2 + jQurery + oQuery;
+  let query = sQuery1 + sQuery2 + jQurery;
   const filters = [];
 
   for (const param in req.query) {
@@ -62,7 +62,7 @@ app.get("/api/logs", (req, res) => {
   if (filters.length > 0) {
     query += " WHERE " + filters.join(" AND ");
   }
-  
+  query += oQuery;
   console.log(query);
   db.query(query, (error, results, fields) => {
     res.send(results);
