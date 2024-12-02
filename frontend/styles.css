@@ -135,6 +135,28 @@ select option {
   font-style: italic;
 }
 
+#maintenance-div{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content: center;
+  justify-items: center;
+  padding-left:155px;
+  padding-right:155px;
+
+}
+
+#maintenance,
+#station,
+#ticket {
+  padding:30px;
+  color:white;
+  background-color: #000000b2;
+  font-size: 12px;
+  margin: 20px;
+  border-radius:10px;
+  box-shadow: 0 1px 8px rgba(165, 93, 93, 0.5);
+}
+
 @media (max-width: 600px) {
   form {
     padding: 15px;
