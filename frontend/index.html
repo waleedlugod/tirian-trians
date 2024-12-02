@@ -9,7 +9,7 @@
   <body>
     <form id="maintenance-log-filter" method='' action='/api/logs'>
       <label for="maintenance_id">maintenance id:</label>
-      <input type="number" id="maintenance_id" name="maintenance_id">
+      <input type="number" min="0" max="999999" id="maintenance_id" name="maintenance_id">
       
       <label for="cond">Condition:</label>
       <select id="cond" name="cond">
