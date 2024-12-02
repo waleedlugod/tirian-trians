@@ -50,18 +50,14 @@
       <button type="button" onclick="getOutgoingRoutes()">Get Routes from Station</button>
     </form>
     <button type="button" onclick="getStations()">Get All Stations</button>
-    <div id="station">
-    </div>
+    <div id="station"></div>
     <form action="/api/tickets">
       <label for="passenger-name">Passenger Name:</label>
       <input type="text" id="passenger-name" name="passenger-name">
       <button type="button" onclick="getPassengerTickets()">Find Tickets</button>
     </form>
     <div id="tickets"></div>
-    <script src="main.js"></script>
     <form id="maintenance-log-post">
-      <label for="maintenance_id">maintenance id:</label>
-      <input type="number" id="maintenance_id" name="maintenance_id">
       
       <label for="cond">Condition:</label>
       <select id="cond" name="cond">
@@ -75,9 +71,13 @@
       <label for="date">Date:</label>
       <input type="date" id="date" name="date">
       
-      <label for="crew-name">Crew Name:</label>
-      <input type="text" id="crew-name" name="crew-name">
+      <label for="train_id">Train ID:</label>
+      <input type="number" id="train_id" name="train_id">
+
+      <label for="crew_name">Crew Name:</label>
+      <input type="text" id="crew_name" name="crew_name">
       <button type="button" onclick="postMaintenanceLog()">Maintenance Log</button>
     </form>
+    <script src="main.js"></script>
   </body>
 </html>

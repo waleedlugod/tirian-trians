@@ -12,6 +12,8 @@ export const db = mysql.createConnection({
 });
 
 db.connect();
+let crewNameConcat = "CONCAT(last_name, ', ',initial, '.')";
+let passengerNameMacro = `CONCAT(given_name, ' ', middle_initial, '. ', last_name)`;
 
 // serve files in frontend folder by default
 app.use(express.static("frontend"));
@@ -33,15 +35,14 @@ app.get("/api/db_test", (req, res) => {
 });
 
 app.get("/api/logs", (req, res) => {
-  let crewNameConcat = "CONCAT(last_name, ', ',initial, '.')";
 
   let sQuery1 =
     "SELECT maintenance_id 'Maintenance ID', log_date 'Log Date', task 'Task', ";
   let sQuery2 = `cond 'Condition', train_id 'Train ID',${crewNameConcat} 'Crew Name' `;
   let jQurery =
     "FROM MAINTENANCE_LOG ml JOIN CREW c ON ml.crew_id = c.crew_id ";
-
-  let query = sQuery1 + sQuery2 + jQurery;
+  let oQuery = `ORDER BY maintenance_id ASC `
+  let query = sQuery1 + sQuery2 + jQurery + oQuery;
   const filters = [];
 
   for (const param in req.query) {
@@ -56,11 +57,12 @@ app.get("/api/logs", (req, res) => {
       );
     } else filters.push(`${param} = ${db.escape(req.query[param])}`);
   }
+
   console.log(filters);
   if (filters.length > 0) {
     query += " WHERE " + filters.join(" AND ");
   }
-
+  
   console.log(query);
   db.query(query, (error, results, fields) => {
     res.send(results);
@@ -71,12 +73,21 @@ app.get("/api/logs", (req, res) => {
 });
 
 app.post("/api/logs", (req, res) => {
-	db.query(`INSERT INTO MAINTENANCE_LOG (log_date, task, cond, train_id, crew_id) VALUES
-		('${req.body.date} 00:00:00', "test", "${req.body.cond}", 1, 1)`, (error, result) => {
-			res.send(result)
-			console.log(error)
-			console.log(result)
-		})
+  console.log(req.body)
+  let crewSelectRes = {}
+  db.query(`SELECT crew_id FROM CREW WHERE ${crewNameConcat} = ${db.escape(req.body.crew_name)}`, (error, results) => {
+    console.log(error)
+    crewSelectRes = (Object.values(JSON.parse(JSON.stringify(results))))
+    const crew_id = crewSelectRes[0]['crew_id']
+    db.query(`INSERT INTO MAINTENANCE_LOG (log_date, task, cond, train_id, crew_id) VALUES
+      ('${req.body.date} 00:00:00', "test", "${req.body.cond}", ${req.body.train_id}, ${crew_id})`, (error, result) => {
+        res.send(result)
+        console.log(error)
+        console.log(result)
+    })
+  })
+  
+
   // db.query(
   //   `
 		// INSERT INTO MAINTENANCE_LOG (log_date, task, cond, train_id, crew_id) VALUES
@@ -147,8 +158,6 @@ app.get("/api/outgoingRoutes", (req, res) => {
 
 app.get("/api/tickets", (req, res) => {
   const name = req.query.passenger;
-
-  let passengerNameMacro = `CONCAT(given_name, ' ', middle_initial, '. ', last_name)`;
 
   let sQuery1 = `SELECT t.ticket_id, t.total_cost, t.date_purchased, p.passenger_id, `;
   let sQuery2 = `tr.departure, tr.arrival, tr.cost, ${passengerNameMacro} 'Passenger Name' `;
