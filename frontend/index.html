@@ -8,9 +8,10 @@
     <!-- Ensure main.js is loaded at the bottom of the body -->
   </head>
   <body>
-    <!-- Maintenance Log Filter Form -->
-    <!-- <form id="maintenance-log-filter">
-      <label for="maintenance_id">Maintenance ID:</label>
+    <!-- <button onclick="buttontest()">Click me test</button>
+    <button onclick="dbtest()">Click me dbtest</button> -->
+    <form id="maintenance-log-filter" method='' action='/api/logs'>
+      <label for="maintenance_id">maintenance id:</label>
       <input type="number" id="maintenance_id" name="maintenance_id">
       
       <label for="cond">Condition:</label>
@@ -27,9 +28,8 @@
       
       <label for="crew-name">Crew Name:</label>
       <input type="text" id="crew-name" name="crew-name">
-      
-      <-- Submit button that will trigger the JavaScript -->
-      <button type="button" onclick="getStations()">Get All Stations</button>
+      <button type="button" onclick="getMaintenanceLog()">Maintenance Log</button>
+      <div id="app"></div>
     </form>
 
     <!-- The div to display the fetched logs -->
