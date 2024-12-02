@@ -15,12 +15,12 @@ function getMaintenanceLog() {
   fetch(`/api/logs?${queryParams}`)
     .then((res) => res.json())
     .then((res) => {
-			console.log(res)
+      console.log(res);
       const app = document.getElementById("maintenance");
       app.innerHTML = "";
 
       const logTable = document.createElement("ul");
-			logTable.classList.add('data-query')
+      logTable.classList.add("data-query");
       for (const maintenanceLog of res) {
         const logElement = document.createElement("li");
         logElement.append(
@@ -50,7 +50,7 @@ function getStations() {
       app.innerHTML = "";
 
       const stationTable = document.createElement("ul");
-			stationTable.classList.add('data-query')
+      stationTable.classList.add("data-query");
       for (const station of res) {
         const stationElement = document.createElement("li");
         const stationCols = document.createElement("ul");
@@ -79,7 +79,7 @@ function getDestinationRoutes() {
       app.innerHTML = "";
 
       const routesTable = document.createElement("ul");
-			routesTable.classList.add('data-query')
+      routesTable.classList.add("data-query");
       for (const route of res) {
         const routeElement = document.createElement("li");
         const routeCols = document.createElement("ul");
@@ -108,7 +108,7 @@ function getOutgoingRoutes() {
       app.innerHTML = "";
 
       const routesTable = document.createElement("ul");
-			routesTable.classList.add('data-query')
+      routesTable.classList.add("data-query");
       for (const route of res) {
         const routeElement = document.createElement("li");
         const routeCols = document.createElement("ul");
@@ -136,7 +136,7 @@ function getPassengerTickets() {
       app.innerHTML = "";
 
       const ticketsTable = document.createElement("ul");
-			ticketsTable.classList.add('data-query')
+      ticketsTable.classList.add("data-query");
       for (const ticket of res) {
         const ticketRow = document.createElement("li");
         const ticketCols = document.createElement("ul");
@@ -173,18 +173,17 @@ function updateStations() {
     .then((res) => res.json())
     .then((res) => {
       const selectEl = document.getElementById("station_name");
-			selectEl.innerHTML = ""
-			res.map((e, i) => {
-				const option = document.createElement("option")
-				if (i === 0) {
-					option.setAttribute("value", "")
-					option.innerText = "-- Select Destination --"
-				} else {
-					option.setAttribute("value", i)
-					option.innerText = e["Station Name"]
-				}
-				selectEl.append(option)
-			})
+      selectEl.innerHTML = "";
+			const option = document.createElement("option");
+      option.setAttribute("value", "");
+      option.innerText = "-- Select Destination --";
+      selectEl.append(option);
+      res.map((e, i) => {
+        const option = document.createElement("option");
+        option.setAttribute("value", i + 1);
+        option.innerText = e["Station Name"];
+        selectEl.append(option);
+      });
     });
 }
-updateStations()
+updateStations();
