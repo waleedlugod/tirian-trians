@@ -9,6 +9,7 @@ export const db = mysql.createConnection({
   user: process.env.USERNAME,
   password: process.env.PASSWORD,
   database: "tt",
+	dateStrings: true,
 });
 
 db.connect();
@@ -79,6 +80,7 @@ app.post("/api/logs", (req, res) => {
     console.log(error)
     crewSelectRes = (Object.values(JSON.parse(JSON.stringify(results))))
     const crew_id = crewSelectRes[0]['crew_id']
+		console.log(req.body.date.replace("T", " ") + ":00")
     db.query(`INSERT INTO MAINTENANCE_LOG (log_date, task, cond, train_id, crew_id) VALUES
       ('${req.body.date.replace("T", " ") + ":00"}', "${req.body.task}", "${req.body.cond}", ${req.body.train_id}, ${crew_id})`, (error, result) => {
         res.send(result)
