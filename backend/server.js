@@ -80,25 +80,12 @@ app.post("/api/logs", (req, res) => {
     crewSelectRes = (Object.values(JSON.parse(JSON.stringify(results))))
     const crew_id = crewSelectRes[0]['crew_id']
     db.query(`INSERT INTO MAINTENANCE_LOG (log_date, task, cond, train_id, crew_id) VALUES
-      ('${req.body.date} 00:00:00', "test", "${req.body.cond}", ${req.body.train_id}, ${crew_id})`, (error, result) => {
+      ('${req.body.date} 00:00:00', "${req.body.task}", "${req.body.cond}", ${req.body.train_id}, ${crew_id})`, (error, result) => {
         res.send(result)
         console.log(error)
         console.log(result)
     })
   })
-  
-
-  // db.query(
-  //   `
-		// INSERT INTO MAINTENANCE_LOG (log_date, task, cond, train_id, crew_id) VALUES
-		// ('${req.body.date}', 'task test', '${req.body.cond}', 1, 1);`,
-  //   (error, results, field) => {
-  //     res.sendStatus(201).send(result);
-  //     console.log(error);
-  //     console.log(results);
-  //     console.log(fields);
-  //   },
-  // );
 });
 
 app.get("/api/stations", (req, res) => {
