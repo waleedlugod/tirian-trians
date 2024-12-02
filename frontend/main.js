@@ -68,12 +68,48 @@ function getStations() {
     });
 }
 
-function getRoutes() {
+function getDestinationRoutes() {
   const destination = document.getElementById("station_name").value;
   const destjson = `destination=${destination}`;
   //console.log(destination);
 
-  fetch(`/api/routes?${destjson}`)
+  fetch(`/api/destinationRoutes?${destjson}`)
+    .then(res => res.json())
+    .then((res) => {
+
+      console.log(res);
+      const app = document.getElementById("station");
+      app.innerHTML = '';
+
+      const routesTable = document.createElement('ul');
+      
+      for (const route of res) {
+        const routeElement = document.createElement('li');
+        
+        const routeCols = document.createElement('ul');
+        routeElement.append(routeCols);
+
+        for (const col in route) {
+          
+          const routeCol = document.createElement('li');
+          const elem = `${col}: ${route[col]}`;
+          routeCol.append(elem);
+          routeCols.append(routeCol);
+        }
+
+        routesTable.append(routeElement);
+      }
+
+      app.append(routesTable);
+    });
+}
+
+function getOutgoingRoutes() {
+  const destination = document.getElementById("station_name").value;
+  const destjson = `destination=${destination}`;
+  //console.log(destination);
+
+  fetch(`/api/outgoingRoutes?${destjson}`)
     .then(res => res.json())
     .then((res) => {
 

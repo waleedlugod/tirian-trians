@@ -98,7 +98,7 @@ app.post('/api/stations', (req, res) => {
 	res.send(200)
 })
 
-app.get('/api/routes', (req, res) => {
+app.get('/api/destinationRoutes', (req, res) => {
   console.log(req.query);
   const destination = req.query.destination;
   console.log(destination);
@@ -121,8 +121,25 @@ app.get('/api/routes', (req, res) => {
 })
 
 
-app.post('/api/routes', (req, res) => {
-	console.log(req.body)
-	res.send(200)
+app.get('/api/outgoingRoutes', (req, res) => {
+  console.log(req.query);
+  const destination = req.query.destination;
+  console.log(destination);
+  let sQuery1 = "SELECT r.route_id 'Route ID', s.station_name 'Origin Station', st.station_name 'Destination Station' FROM ROUTE r , STATION s, STATION st WHERE r.origin_station_id = s.station_id AND st.station_id = r.destination_station_id AND r.origin_station_id =  ";
+  sQuery1 += destination;
+  
+  console.log(sQuery1);
+
+  let query = sQuery1
+  const filters = [];
+  
+  console.log(query)
+  db.query(query, (error, results, fields) => {
+    res.send(results)
+    console.log(error)
+    console.log(results)
+    console.log(fields)
+  })
+	console.log(req.method)
 })
 
