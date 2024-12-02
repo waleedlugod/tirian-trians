@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+<<<<<<< Updated upstream
     <form id="maintenance-log-filter" method="" action="/api/logs">
       <label for="maintenance_id">Maintenance ID:</label>
       <input
@@ -17,6 +18,13 @@
         name="maintenance_id"
       />
 
+=======
+    <script src="main.js"></script>
+    <form id="maintenance-log-filter" method='' action='/api/logs'>
+      <label for="maintenance_id">maintenance id:</label>
+      <input type="number" min="0" max="999999" id="maintenance_id" name="maintenance_id">
+      
+>>>>>>> Stashed changes
       <label for="cond">Condition:</label>
       <select id="cond" name="cond">
         <option value="">-- Select Condition --</option>
@@ -35,11 +43,17 @@
         Maintenance Log
       </button>
     </form>
+<<<<<<< Updated upstream
     <div id="maintenance"></div>
     <form id="station-route-filter" method="" action="/api/stations">
+=======
+    <div id="maintenance" class="query-data"></div>
+    <form id="station-route-filter" method="" action='/api/stations'>
+>>>>>>> Stashed changes
       <label for="station_name">Station Name:</label>
       <select id="station_name" name="station_name" onfocus='updateStations()'>
       </select>
+<<<<<<< Updated upstream
       <button type="button" onclick="getDestinationRoutes()">
         Get Routes to Station
       </button>
@@ -49,6 +63,14 @@
 			<button type="button" onclick="getStations()">Get All Stations</button>
     </form>
     <div id="station"></div>
+=======
+      <button type="button" onclick="getDestinationRoutes()">Get Routes to Station</button>
+      <button type="button" onclick="getOutgoingRoutes()">Get Routes from Station</button>
+			<button type="button" onclick="getStations()">Get All Stations</button>
+    </form>
+    <div id="station" class="query-data">
+    </div>
+>>>>>>> Stashed changes
     <form action="/api/tickets">
       <label for="passenger-name">Passenger Name:</label>
       <input type="text" id="passenger-name" name="passenger-name" />
@@ -57,6 +79,7 @@
       </button>
     </form>
     <div id="tickets"></div>
+<<<<<<< Updated upstream
     <form id="maintenance-log-post">
       <label for="task">Task:</label>
       <input type="text" id="task" name="task" />
@@ -83,5 +106,7 @@
       </button>
     </form>
     <script src="main.js"></script>
+=======
+>>>>>>> Stashed changes
   </body>
 </html>

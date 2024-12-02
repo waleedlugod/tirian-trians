@@ -126,7 +126,12 @@ function getOutgoingRoutes() {
 }
 
 function getPassengerTickets() {
+<<<<<<< Updated upstream
   const passengerName = document.getElementById("passenger-name").value;
+=======
+  const passengerName = document.getElementById('passenger-name').value;
+	if (passengerName == "") {break}
+>>>>>>> Stashed changes
   const passengerNameQuery = `passenger=${passengerName}`;
   console.log(passengerNameQuery);
   fetch(`/api/tickets?${passengerNameQuery}`)
@@ -147,6 +152,7 @@ function getPassengerTickets() {
           const elem = `${col}: ${ticket[col]}`;
           ticketCol.append(elem);
           ticketCols.append(ticketCol);
+<<<<<<< Updated upstream
         }
         ticketsTable.append(ticketRow);
       }
@@ -188,3 +194,9 @@ function updateStations() {
     });
 }
 updateStations()
+=======
+        } ticketsTable.append(ticketRow);
+      } app.append(ticketsTable);
+    })
+}
+>>>>>>> Stashed changes
