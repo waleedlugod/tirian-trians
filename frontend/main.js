@@ -15,6 +15,7 @@ function getMaintenanceLog() {
   fetch(`/api/logs?${queryParams}`)
     .then((res) => res.json())
     .then((res) => {
+			console.log(res)
       const app = document.getElementById("maintenance");
       app.innerHTML = "";
 
@@ -128,7 +129,6 @@ function getOutgoingRoutes() {
 function getPassengerTickets() {
   const passengerName = document.getElementById("passenger-name").value;
   const passengerNameQuery = `passenger=${passengerName}`;
-  console.log(passengerNameQuery);
   fetch(`/api/tickets?${passengerNameQuery}`)
     .then((res) => res.json())
     .then((res) => {

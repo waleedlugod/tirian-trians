@@ -44,6 +44,7 @@ label {
 
 input[type="number"],
 input[type="date"],
+input[type="datetime-local"],
 input[type="text"],
 select {
   width: 100%;
