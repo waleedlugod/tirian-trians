@@ -74,6 +74,7 @@ CREATE TABLE STATION(
 CREATE TABLE ROUTE(
     route_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
     system_type VARCHAR(9), -- local, intertown
+    is_active BOOL,
     origin_station_id INT NOT NULL,
     destination_station_id INT NOT NULL,
     FOREIGN KEY (origin_station_id) REFERENCES STATION(station_id),
@@ -190,37 +191,37 @@ VALUES
 ('Cherry Tree'),
 ('Father Christmas');
 
-INSERT INTO ROUTE (system_type, origin_station_id, destination_station_id) 
+INSERT INTO ROUTE (system_type, is_active, origin_station_id, destination_station_id) 
 VALUES
 -- Local System Routes (Circular)
-('local', 1, 2),
-('local', 2, 3),
-('local', 3, 4),
-('local', 4, 1),
+('local', TRUE, 1, 2),
+('local', TRUE, 2, 3),
+('local', TRUE, 3, 4),
+('local', TRUE, 4, 1),
 
 -- Intertown System Routes
-('intertown', 5, 2), -- 5
-('intertown', 2, 5),
-('intertown', 2, 6),
-('intertown', 6, 2),
-('intertown', 2, 7),
-('intertown', 7, 2), -- 10
-('intertown', 2, 10),
-('intertown', 10, 2),
-('intertown', 7, 13),
-('intertown', 13, 7),
-('intertown', 7, 12), -- 15
-('intertown', 12, 7),
-('intertown', 12, 13),
-('intertown', 13, 12),
-('intertown', 13, 8),
-('intertown', 8, 13), -- 20
-('intertown', 8, 9),
-('intertown', 9, 8),
-('intertown', 9, 10),
-('intertown', 10, 9),
-('intertown', 10, 11), -- 25
-('intertown', 11, 10);
+('intertown', TRUE, 5, 2), -- 5
+('intertown', TRUE, 2, 5),
+('intertown', TRUE, 2, 6),
+('intertown', TRUE, 6, 2),
+('intertown', TRUE, 2, 7),
+('intertown', TRUE, 7, 2), -- 10
+('intertown', TRUE, 2, 10),
+('intertown', TRUE, 10, 2),
+('intertown', TRUE, 7, 13),
+('intertown', TRUE, 13, 7),
+('intertown', TRUE, 7, 12), -- 15
+('intertown', TRUE, 12, 7),
+('intertown', TRUE, 12, 13),
+('intertown', TRUE, 13, 12),
+('intertown', TRUE, 13, 8),
+('intertown', TRUE, 8, 13), -- 20
+('intertown', TRUE, 8, 9),
+('intertown', TRUE, 9, 8),
+('intertown', TRUE, 9, 10),
+('intertown', TRUE, 10, 9),
+('intertown', TRUE, 10, 11), -- 25
+('intertown', TRUE, 11, 10);
 
 INSERT INTO TRIP (departure, arrival, cost, train_id, route_id, schedule_id)
 VALUES

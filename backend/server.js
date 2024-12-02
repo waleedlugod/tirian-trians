@@ -111,7 +111,7 @@ app.get("/api/destinationRoutes", (req, res) => {
   const destination = req.query.destination;
   console.log(destination);
   let sQuery1 =
-    "SELECT r.route_id 'Route ID', st.station_name 'Origin Station', s.station_name 'Destination Station' FROM ROUTE r , STATION s, STATION st WHERE r.destination_station_id = s.station_id AND st.station_id = r.origin_station_id AND r.destination_station_id = ";
+    "SELECT r.route_id 'Route ID', st.station_name 'Origin Station', s.station_name 'Destination Station', r.is_active 'Is Active' FROM ROUTE r , STATION s, STATION st WHERE r.destination_station_id = s.station_id AND st.station_id = r.origin_station_id AND r.destination_station_id = ";
   sQuery1 += destination;
 
   let query = sQuery1;
@@ -129,7 +129,7 @@ app.get("/api/destinationRoutes", (req, res) => {
 app.get("/api/outgoingRoutes", (req, res) => {
   const origin = req.query.origin;
   let sQuery1 =
-    "SELECT r.route_id 'Route ID', s.station_name 'Origin Station', st.station_name 'Destination Station' FROM ROUTE r , STATION s, STATION st WHERE r.origin_station_id = s.station_id AND st.station_id = r.destination_station_id AND r.origin_station_id =  ";
+    "SELECT r.route_id 'Route ID', s.station_name 'Origin Station', st.station_name 'Destination Station', r.is_active 'Is Active' FROM ROUTE r , STATION s, STATION st WHERE r.origin_station_id = s.station_id AND st.station_id = r.destination_station_id AND r.origin_station_id =  ";
   sQuery1 += origin;
 
   let query = sQuery1;
