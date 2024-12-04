@@ -43,6 +43,9 @@ function getMaintenanceLog() {
 }
 
 function getStations() {
+  const label = document.getElementById("station_name")
+  label.innerHTML = '-------'
+
   fetch("/api/stations")
     .then((res) => res.json())
     .then((res) => {

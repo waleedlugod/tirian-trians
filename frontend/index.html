@@ -31,7 +31,7 @@
       <label for="crew-name">Crew Name:</label>
       <input type="text" id="crew-name" name="crew-name" />
       <button type="button" onclick="getMaintenanceLog()">
-        Maintenance Log
+        Search Maintenance Log
       </button>
     </form>
     <div id="maintenance" class="query-data"></div>
@@ -41,10 +41,9 @@
       </select>
       <button type="button" onclick="getDestinationRoutes()">Get Routes to Station</button>
       <button type="button" onclick="getOutgoingRoutes()">Get Routes from Station</button>
-			<button type="button" onclick="getStations()">Get All Stations</button>
+      <button type="button" onclick="getStations()">Show All Stations</button>
     </form>
-    <div id="station" class="query-data">
-    </div>
+    <div id="station" class="query-data"></div>
     <form action="/api/tickets">
       <label for="passenger-name">Passenger Name:</label>
       <input type="text" id="passenger-name" name="passenger-name" />
@@ -75,7 +74,7 @@
       <label for="crew_name">Crew Name:</label>
       <input type="text" id="crew_name" name="crew_name" />
       <button type="button" onclick="postMaintenanceLog()">
-        Maintenance Log
+        Add Maintenance Log
       </button>
     </form>
     <script src="main.js"></script>
